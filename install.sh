@@ -1,6 +1,7 @@
 #!/bin/sh
 # pinchOS one-line installer — the "mom path". Downloads the prebuilt single-file binary for this
-# machine's OS/arch and drops it on PATH. No git, no Node, no npm, no build. Usage:
+# machine's OS/arch and drops it on PATH, AND installs pincher (the grounding engine) alongside it so
+# grounded loop phases work out of the box. No git, no Node, no npm, no build. Usage:
 #
 #   curl -fsSL https://raw.githubusercontent.com/kwad77/pinchOS/main/scripts/install.sh | sh
 #
@@ -34,7 +35,34 @@ if ! curl -fSL "$URL" -o "$DEST/pinchos" 2>/dev/null; then
   exit 1
 fi
 chmod +x "$DEST/pinchos"
+# macOS: a downloaded binary carries a quarantine xattr → Gatekeeper blocks it ("could not verify… free
+# of malware"). You just chose to run this installer, so clear the quarantine on THIS file (you trust it)
+# — the binary is ad-hoc signed so it runs. (Best-effort; full notarization is a separate step.)
+[ "$OS" = "darwin" ] && xattr -d com.apple.quarantine "$DEST/pinchos" 2>/dev/null || true
 echo "  ✓ installed: $DEST/pinchos"
+
+# pincher — the code-intelligence GROUNDING engine pinchOS uses to ground a working folder. It's what
+# lets grounded loop phases (e.g. Gather Context) cite real evidence; without it those phases can't
+# ground and block. So install it WITH pinchOS — the happy path works out of the box. Best-effort: if it
+# can't be installed, pinchOS still runs (ungrounded) and you can add pincher later from Workshop →
+# Power-ups. Opt out with PINCHOS_SKIP_PINCHER=1. Skipped on Windows (pincher ships a .zip there).
+if [ "${PINCHOS_SKIP_PINCHER:-}" != "1" ] && [ "$OS" != "win32" ]; then
+  echo "pinchOS installer — also setting up pincher (the grounding engine)…"
+  PARCH="$ARCH"; [ "$ARCH" = "x64" ] && PARCH="amd64"   # pincher uses amd64/arm64; pinchOS uses x64/arm64
+  if PTAG="$(curl -fsSL https://api.github.com/repos/kwad77/pincher/releases/latest | sed -n 's/.*"tag_name": *"\([^"]*\)".*/\1/p' | head -1)" && [ -n "$PTAG" ]; then
+    PASSET="pincher-${PTAG}-${OS}-${PARCH}"   # tarball holds ONE binary named for the asset, not "pincher"
+    if curl -fsSL "https://github.com/kwad77/pincher/releases/download/${PTAG}/${PASSET}.tar.gz" | tar xz -C "$DEST" 2>/dev/null && [ -f "$DEST/${PASSET}" ]; then
+      mv -f "$DEST/${PASSET}" "$DEST/pincher"
+      chmod +x "$DEST/pincher"
+      [ "$OS" = "darwin" ] && xattr -d com.apple.quarantine "$DEST/pincher" 2>/dev/null || true
+      echo "  ✓ installed: $DEST/pincher ($PTAG) — grounding enabled"
+    else
+      echo "  ⚠ couldn't download pincher (${PASSET}) — pinchOS still runs ungrounded; add it later from Workshop → Power-ups."
+    fi
+  else
+    echo "  ⚠ couldn't resolve the latest pincher release (GitHub API rate-limited?) — pinchOS still runs ungrounded; add it later from Workshop → Power-ups."
+  fi
+fi
 case ":$PATH:" in
   *":$DEST:"*) echo "  run:  pinchos      → then open http://localhost:4147" ;;
   *) echo "  add $DEST to your PATH, then run:  pinchos   (or run it directly: $DEST/pinchos)" ;;
