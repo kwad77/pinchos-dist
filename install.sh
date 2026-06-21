@@ -3,7 +3,7 @@
 # machine's OS/arch and drops it on PATH, AND installs pincher (the grounding engine) alongside it so
 # grounded loop phases work out of the box. No git, no Node, no npm, no build. Usage:
 #
-#   curl -fsSL https://raw.githubusercontent.com/kwad77/pinchOS/main/scripts/install.sh | sh
+#   curl -fsSL https://raw.githubusercontent.com/kwad77/pinchos-dist/main/install.sh | sh
 #
 # Honest by design: if there's no published build for this OS/arch yet, it says so plainly and points
 # at the from-source path — it never half-installs or pretends. Set PINCHOS_BIN_DIR to override where
@@ -28,8 +28,9 @@ mkdir -p "$DEST"
 if ! curl -fSL "$URL" -o "$DEST/pinchos" 2>/dev/null; then
   echo ""
   echo "  ✗ No published build for ${ASSET} yet (so this one-liner can't install it)."
-  echo "    Until prebuilt downloads are published, install from source (needs Node ≥ 22):"
-  echo "      git clone https://github.com/${REPO} && cd pinchOS && npm run setup && npm run pinchos"
+  echo "    Built platforms: linux-x64 · darwin-arm64 (Apple Silicon) · win32-x64."
+  echo "    Browse the latest release, or open an issue to request ${ASSET}:"
+  echo "      https://github.com/${REPO}/releases/latest"
   echo ""
   rm -f "$DEST/pinchos"
   exit 1
