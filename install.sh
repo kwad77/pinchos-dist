@@ -85,6 +85,10 @@ case ":$PATH:" in
     else
       echo "  ✓ $DEST already configured in $rc"
     fi
-    echo "  → open a NEW terminal (or run:  source $rc)  then:  pinchos   → http://localhost:4147"
+    # curl|sh runs in a SUBSHELL — it cannot change THIS shell's PATH (only new shells read the rc). So lead
+    # with a copy-pasteable command that works in the current terminal right now.
+    echo ""
+    echo "  ▶ run it now (paste this):   source $rc && pinchos       → http://localhost:4147"
+    echo "    (any new terminal just needs:  pinchos)"
     ;;
 esac
