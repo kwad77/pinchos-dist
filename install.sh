@@ -64,7 +64,27 @@ if [ "${PINCHOS_SKIP_PINCHER:-}" != "1" ] && [ "$OS" != "win32" ]; then
     echo "  ⚠ couldn't resolve the latest pincher release (GitHub API rate-limited?) — pinchOS still runs ungrounded; add it later from Workshop → Power-ups."
   fi
 fi
+# PATH — write it for the user (the "mom path" doesn't end at a manual PATH edit). Both pinchos AND pincher
+# live in $DEST, so one entry covers both. Idempotent: only append if $DEST isn't already on PATH and the line
+# isn't already in the rc. Persist into the interactive shell's rc; ~/.profile is the POSIX fallback.
 case ":$PATH:" in
-  *":$DEST:"*) echo "  run:  pinchos      → then open http://localhost:4147" ;;
-  *) echo "  add $DEST to your PATH, then run:  pinchos   (or run it directly: $DEST/pinchos)" ;;
+  *":$DEST:"*)
+    echo "  run:  pinchos      → then open http://localhost:4147"
+    ;;
+  *)
+    case "${SHELL:-}" in
+      *zsh)  rc="$HOME/.zshrc" ;;
+      *bash) rc="$HOME/.bashrc" ;;
+      *)     rc="$HOME/.profile" ;;
+    esac
+    line="export PATH=\"$DEST:\$PATH\""
+    if ! grep -qsF "$DEST" "$rc" 2>/dev/null; then
+      printf '\n# added by the pinchOS installer (pinchos + pincher live here)\n%s\n' "$line" >> "$rc" 2>/dev/null \
+        && echo "  ✓ added $DEST to your PATH in $rc" \
+        || echo "  ⚠ couldn't write $rc — add this line yourself:  $line"
+    else
+      echo "  ✓ $DEST already configured in $rc"
+    fi
+    echo "  → open a NEW terminal (or run:  source $rc)  then:  pinchos   → http://localhost:4147"
+    ;;
 esac
