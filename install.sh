@@ -23,6 +23,24 @@ ASSET="pinchos-${OS}-${ARCH}"
 DEST="${PINCHOS_BIN_DIR:-$HOME/.local/bin}"
 URL="https://github.com/${REPO}/releases/latest/download/${ASSET}"
 
+# BETA channel: `--beta` (or PINCHOS_BETA=1) installs the latest PRERELEASE from the pinchOS repo (where beta
+# tags + their binaries live). Stable stays on pinchos-dist/releases/latest. The releases API returns newest-
+# first; the first tag_name with a hyphen (vX.Y.Z-beta.N / -rc) is the latest prerelease.
+BETA=""
+for a in "$@"; do [ "$a" = "--beta" ] && BETA=1; done
+[ "${PINCHOS_BETA:-}" = "1" ] && BETA=1
+if [ -n "$BETA" ]; then
+  # all tag_names (newest-first), then the FIRST containing a hyphen = the latest prerelease. sed (not grep)
+  # for the pick so it's portable across grep flavors.
+  BTAG="$(curl -fsSL "https://api.github.com/repos/kwad77/pinchOS/releases" 2>/dev/null | sed -n 's/.*"tag_name": *"\([^"]*\)".*/\1/p' | sed -n '/-/{p;q;}' || true)"
+  if [ -n "$BTAG" ]; then
+    URL="https://github.com/kwad77/pinchOS/releases/download/${BTAG}/${ASSET}"
+    echo "pinchOS installer — BETA channel (${BTAG})"
+  else
+    echo "  ⚠ no prerelease found (API rate-limited?) — falling back to the stable channel."
+  fi
+fi
+
 echo "pinchOS installer — looking for a prebuilt ${ASSET}…"
 mkdir -p "$DEST"
 if ! curl -fSL "$URL" -o "$DEST/pinchos" 2>/dev/null; then
