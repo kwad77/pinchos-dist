@@ -56,12 +56,13 @@ Honesty is the whole claim, so it's **measured, not asserted** — by instrument
 
 ## Manual download
 
-Grab the file for your machine from the [latest release](../../releases/latest):
+Grab the file for your machine from the [latest release](../../releases/latest), `chmod +x`, and run it:
 
-- **linux-arm64** — `pinchos-linux-arm64` → `chmod +x ./pinchos-linux-arm64 && ./pinchos-linux-arm64`
+- **macOS** (Apple Silicon) — `pinchos-darwin-arm64`
+- **Windows** (x64) — `pinchos-win32-x64.exe`
+- **Linux** — `pinchos-linux-x64` · `pinchos-linux-arm64`
 
-A build for your exact OS/arch may not be published yet — the installer says so honestly (it never
-half-installs) and points you to the release page. **Open an issue to request a build for your platform.**
+(If a build for your exact OS/arch isn't published, the installer says so honestly — it never half-installs — and points you to the release page.)
 
 > **macOS:** a downloaded binary is quarantined by Gatekeeper. The installer clears it for you; for a manual
 > download, run `xattr -d com.apple.quarantine ./pinchos-darwin-arm64` once, then `./pinchos-darwin-arm64`.
@@ -74,4 +75,4 @@ first-run and run journey, and crash-guards so a glitch never freezes the screen
 [release page](../../releases/latest).
 
 ---
-<div align="center"><sub>Prebuilt distribution. Open an issue for a build for your platform.</sub></div>
+<div align="center"><sub>Prebuilt distribution for macOS · Windows · Linux (x64/arm64).</sub></div>
