@@ -8,7 +8,7 @@ Hand a goal to any model and *trust the result*: pinchOS runs **verified** AI lo
 physically can't fake success, won't stop when tokens run out, shows you exactly what it did, and never
 locks you to one vendor.
 
-[![release](https://img.shields.io/badge/release-v0.6.0-2ea44f)](https://github.com/kwad77/pinchos-dist/releases/latest)
+[![release](https://img.shields.io/badge/release-v0.7.0-2ea44f)](https://github.com/kwad77/pinchos-dist/releases/latest)
 [![install](https://img.shields.io/badge/install-one%20line-5b8def)](#install-one-line)
 [![would rather block than lie](https://img.shields.io/badge/would%20rather-block%20than%20lie-d6336c)](#proof-not-promises)
 
@@ -31,11 +31,13 @@ all run; answers use an **honest offline fallback** until you add a model — it
 model under **Models & agents** (one click to make a frontier model your default), point pinchOS at a
 **Folder**, then ask.
 
-## What it does (v0.6.0)
+## What it does (v0.7.0)
 
 - **Ask, get a grounded answer** — like a normal LLM by default (pincher-grounded on **your** folder, and it
   uses your skills), with a trust verdict you can click into for the receipts. It only says "grounded" when
   it actually is — no folder, no false badge.
+- **Attach a file to chat** — drag, paste (⌘/Ctrl+V a screenshot), or 📎 an image or text/code file straight
+  into the message; images go to a vision model, text/code grounds the answer.
 - **Update in one click** — when a new version ships, an **Update now** button pulls + verifies + installs it
   in place (the previous version is kept as a backup); no terminal, no copy-paste.
 - **Run a verified loop on your folder** — **▶ Run…** → pick which loop + how many iterations → it works,
@@ -73,13 +75,12 @@ Grab the file for your machine from the [latest release](../../releases/latest),
 > **macOS:** a downloaded binary is quarantined by Gatekeeper. The installer clears it for you; for a manual
 > download, run `xattr -d com.apple.quarantine ./pinchos-darwin-arm64` once, then `./pinchos-darwin-arm64`.
 
-## What's new in v0.6.0 — update in one click, ground on the right repo
+## What's new in v0.7.0 — attach files to chat
 
-**One-click "Update now"** — pinchOS pulls its own updates in place (download → verify the binary → swap,
-keeping the previous version as a backup), so you never touch a terminal to upgrade. Plus two honesty fixes:
-grounding now actually uses **your** folder (it had been reading the wrong repo), and a reply only shows the
-"grounded" badge when it earned it. Rounded out with storage-durability hardening and UX polish. Full notes on
-the [release page](../../releases/latest).
+**Drag, paste, or 📎 a file straight into chat.** Drop an image or text/code file onto the conversation,
+paste a screenshot (⌘/Ctrl+V), or pick one — images go to a vision model, text/code grounds the answer.
+Honest about it: an image with no vision model offers a one-tap "connect one" instead of a dead drop, and
+PDFs/Office docs are declined rather than silently dropped. Full notes on the [release page](../../releases/latest).
 
 ---
 <div align="center"><sub>Prebuilt distribution for macOS · Windows · Linux (x64/arm64).</sub></div>
