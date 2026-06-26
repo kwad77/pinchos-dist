@@ -8,7 +8,7 @@ Hand a goal to any model and *trust the result*: pinchOS runs **verified** AI lo
 physically can't fake success, won't stop when tokens run out, shows you exactly what it did, and never
 locks you to one vendor.
 
-[![release](https://img.shields.io/badge/release-v0.7.0-2ea44f)](https://github.com/kwad77/pinchos-dist/releases/latest)
+[![release](https://img.shields.io/badge/release-v0.8.0-2ea44f)](https://github.com/kwad77/pinchos-dist/releases/latest)
 [![install](https://img.shields.io/badge/install-one%20line-5b8def)](#install-one-line)
 [![would rather block than lie](https://img.shields.io/badge/would%20rather-block%20than%20lie-d6336c)](#proof-not-promises)
 
@@ -31,11 +31,14 @@ all run; answers use an **honest offline fallback** until you add a model — it
 model under **Models & agents** (one click to make a frontier model your default), point pinchOS at a
 **Folder**, then ask.
 
-## What it does (v0.7.0)
+## What it does (v0.8.0)
 
 - **Ask, get a grounded answer** — like a normal LLM by default (pincher-grounded on **your** folder, and it
   uses your skills), with a trust verdict you can click into for the receipts. It only says "grounded" when
-  it actually is — no folder, no false badge.
+  it actually is — no folder, no false badge (and an *unverified* answer never wears a ✓).
+- **Build a change, end to end** — ask "add a subtract(a,b) function to calc.js" and it routes to the build
+  loop, grounds on your folder, runs, surfaces the verified change, and one click lands it on disk. If a build
+  ask comes back as a code snippet, a one-click **▶ Build & apply** turns it into a real verified change.
 - **Attach a file to chat** — drag, paste (⌘/Ctrl+V a screenshot), or 📎 an image or text/code file straight
   into the message; images go to a vision model, text/code grounds the answer.
 - **Update in one click** — when a new version ships, an **Update now** button pulls + verifies + installs it
@@ -75,12 +78,16 @@ Grab the file for your machine from the [latest release](../../releases/latest),
 > **macOS:** a downloaded binary is quarantined by Gatekeeper. The installer clears it for you; for a manual
 > download, run `xattr -d com.apple.quarantine ./pinchos-darwin-arm64` once, then `./pinchos-darwin-arm64`.
 
-## What's new in v0.7.0 — attach files to chat
+## What's new in v0.8.0 — the build loop works end to end
 
-**Drag, paste, or 📎 a file straight into chat.** Drop an image or text/code file onto the conversation,
-paste a screenshot (⌘/Ctrl+V), or pick one — images go to a vision model, text/code grounds the answer.
-Honest about it: an image with no vision model offers a one-tap "connect one" instead of a dead drop, and
-PDFs/Office docs are declined rather than silently dropped. Full notes on the [release page](../../releases/latest).
+**A build request now goes all the way from ask to applied-on-disk.** A hand dogfood found it broken at every
+joint ("3-step loop produced zero result · never made it past apply"); this release root-causes each one *live*
+(real server + real model + a real folder, ground-truthed to disk) and fixes them: grounding reads the same
+folder it indexed, edit verbs route to the build loop, a run always surfaces its real work (never "zero
+result"), a code-snippet answer gets a one-click **▶ Build & apply** bridge, and the verified change is
+reachable + appliable mid-run. Plus: a folder-needed hint for repo questions with no folder, the
+✓-on-*unverified* trust-chip honesty fix, and an OS-correct bindable ALPO screen-cap hotkey (Mac ⌥⇧S).
+Full notes on the [release page](../../releases/latest).
 
 ---
 <div align="center"><sub>Prebuilt distribution for macOS · Windows · Linux (x64/arm64).</sub></div>
