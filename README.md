@@ -8,7 +8,7 @@ Hand a goal to any model and *trust the result*: pinchOS runs **verified** AI lo
 physically can't fake success, won't stop when tokens run out, shows you exactly what it did, and never
 locks you to one vendor.
 
-[![release](https://img.shields.io/badge/release-v0.9.0-2ea44f)](https://github.com/kwad77/pinchos-dist/releases/latest)
+[![release](https://img.shields.io/badge/release-v0.10.0-2ea44f)](https://github.com/kwad77/pinchos-dist/releases/latest)
 [![install](https://img.shields.io/badge/install-one%20line-5b8def)](#install-one-line)
 [![would rather block than lie](https://img.shields.io/badge/would%20rather-block%20than%20lie-d6336c)](#proof-not-promises)
 
@@ -31,7 +31,7 @@ all run; answers use an **honest offline fallback** until you add a model — it
 model under **Models & agents** (one click to make a frontier model your default), point pinchOS at a
 **Folder**, then ask.
 
-## What it does (v0.9.0)
+## What it does (v0.10.0)
 
 - **Ask, get a grounded answer** — like a normal LLM by default (pincher-grounded on **your** folder, and it
   uses your skills), with a trust verdict you can click into for the receipts. It only says "grounded" when
@@ -78,16 +78,17 @@ Grab the file for your machine from the [latest release](../../releases/latest),
 > **macOS:** a downloaded binary is quarantined by Gatekeeper. The installer clears it for you; for a manual
 > download, run `xattr -d com.apple.quarantine ./pinchos-darwin-arm64` once, then `./pinchos-darwin-arm64`.
 
-## What's new in v0.9.0 — the loops actually work (correctness · honesty · durability)
+## What's new in v0.10.0 — the loop streams ideas, files the work, and learns (ALPO + composable phases)
 
-After v0.8.0 closed the build loop, an **exhaustive audit** + **two live UI dogfoods** (a build journey and a
-6-journey walk, ground-truthed to disk) drove a deep correctness/honesty pass — the loops, and the gate, now
-do what they claim. It **won't land a half-applied change**; the work-contract **lost-update race is closed**
-(no more folder/agent state loss under a running loop); a **grounded answer about your code reads the real
-file content** (it no longer describes a buggy `a-b` add as "sum"); the **bug-hunt loop actually applies its
-fix** (red test → fixed → verified green); `unverified` no longer wears a ✓; a running multi-pass run
-**survives a restart**; approve/confirm asks render **buttons**, not an unanswerable box; and a change
-**re-indexes** so the next loop grounds on it. Full notes on the [release page](../../releases/latest).
+v0.9.0 made the loops *correct*. v0.10.0 makes them *productive on their own*. A **broad goal fans out into a
+stream** of grounded, language-agnostic sub-goals — and each becomes a **tracked ticket on a real board**, with
+its detail in chat and its own project repo. **ALPO** capture lands feedback as you work — screen-capture **and
+walkie-talkie push-to-talk voice, both with user-bindable hotkeys** (hold to talk) — and turns friction into
+tickets. What the loop learns **accumulates as portable `SKILL.md`** (the universal Agent-Skills format). The
+verification got composable too: a **vision-judge UI gate** (~11s vs ~8min) plus a **browser gate on the real
+DOM** with a **gate-integrity guard** (a change can't rewrite its own gate), an author that **edits but doesn't
+grade itself**, and a **Critique→Propose self-correction** that threads the jury's verdict into the next try.
+Full notes on the [release page](../../releases/latest).
 
 ---
 <div align="center"><sub>Prebuilt distribution for macOS · Windows · Linux (x64/arm64).</sub></div>
