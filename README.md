@@ -8,7 +8,7 @@ Hand a goal to any model and *trust the result*: pinchOS runs **verified** AI lo
 physically can't fake success, won't stop when tokens run out, shows you exactly what it did, and never
 locks you to one vendor.
 
-[![release](https://img.shields.io/badge/release-v0.10.0-2ea44f)](https://github.com/kwad77/pinchos-dist/releases/latest)
+[![release](https://img.shields.io/badge/release-v0.11.0-2ea44f)](https://github.com/kwad77/pinchos-dist/releases/latest)
 [![install](https://img.shields.io/badge/install-one%20line-5b8def)](#install-one-line)
 [![would rather block than lie](https://img.shields.io/badge/would%20rather-block%20than%20lie-d6336c)](#proof-not-promises)
 
@@ -31,7 +31,7 @@ all run; answers use an **honest offline fallback** until you add a model — it
 model under **Models & agents** (one click to make a frontier model your default), point pinchOS at a
 **Folder**, then ask.
 
-## What it does (v0.10.0)
+## What it does (v0.11.0)
 
 - **Ask, get a grounded answer** — like a normal LLM by default (pincher-grounded on **your** folder, and it
   uses your skills), with a trust verdict you can click into for the receipts. It only says "grounded" when
@@ -78,17 +78,16 @@ Grab the file for your machine from the [latest release](../../releases/latest),
 > **macOS:** a downloaded binary is quarantined by Gatekeeper. The installer clears it for you; for a manual
 > download, run `xattr -d com.apple.quarantine ./pinchos-darwin-arm64` once, then `./pinchos-darwin-arm64`.
 
-## What's new in v0.10.0 — the loop streams ideas, files the work, and learns (ALPO + composable phases)
+## What's new in v0.11.0 — control it from your phone (Slack + theme restore + the loop lands UI work)
 
-v0.9.0 made the loops *correct*. v0.10.0 makes them *productive on their own*. A **broad goal fans out into a
-stream** of grounded, language-agnostic sub-goals — and each becomes a **tracked ticket on a real board**, with
-its detail in chat and its own project repo. **ALPO** capture lands feedback as you work — screen-capture **and
-walkie-talkie push-to-talk voice, both with user-bindable hotkeys** (hold to talk) — and turns friction into
-tickets. What the loop learns **accumulates as portable `SKILL.md`** (the universal Agent-Skills format). The
-verification got composable too: a **vision-judge UI gate** (~11s vs ~8min) plus a **browser gate on the real
-DOM** with a **gate-integrity guard** (a change can't rewrite its own gate), an author that **edits but doesn't
-grade itself**, and a **Critique→Propose self-correction** that threads the jury's verdict into the next try.
-Full notes on the [release page](../../releases/latest).
+**Control pinchOS from Slack.** DM or @mention a thin bot and every message becomes a turn on your running
+pinchOS — the answer comes back in-thread. All the intelligence stays in pinchOS: grounding, the self-improve
+loop, verification, memory, and *every command* (`/improve <goal>`, `/loop`, `/target`) work through it, so you
+can **start and steer the loop from your phone**. No public URL or tunnel (it connects out over a websocket).
+The **full theme palette is back** — 8 colorways, and your choice now persists server-side across devices. And
+the **self-improve loop can land UI work unattended**: it no longer flakes on its own browser suite (the heavy
+gate is CI-only locally, recorded honestly so it never flips a verified result) — a fix the loop **authored
+itself**. Full notes on the [release page](../../releases/latest).
 
 ---
 <div align="center"><sub>Prebuilt distribution for macOS · Windows · Linux (x64/arm64).</sub></div>
