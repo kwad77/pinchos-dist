@@ -46,9 +46,9 @@ mkdir -p "$DEST"
 if ! curl -fSL "$URL" -o "$DEST/pinchos" 2>/dev/null; then
   echo ""
   echo "  ✗ No published build for ${ASSET} yet (so this one-liner can't install it)."
-  echo "    Built platforms: linux-x64 · darwin-arm64 (Apple Silicon) · win32-x64."
-  echo "    Browse the latest release, or open an issue to request ${ASSET}:"
-  echo "      https://github.com/${REPO}/releases/latest"
+  echo "    Built platforms: linux-x64 · linux-arm64 · darwin-arm64 (Apple Silicon) · win32-x64."
+  echo "    Until prebuilt downloads are published for your platform, install from source (needs Node >= 22):"
+  echo "      git clone https://github.com/kwad77/pinchOS && cd pinchOS && npm run setup && npm run pinchos"
   echo ""
   rm -f "$DEST/pinchos"
   exit 1
@@ -63,7 +63,7 @@ echo "  ✓ installed: $DEST/pinchos"
 # pincher — the code-intelligence GROUNDING engine pinchOS uses to ground a working folder. It's what
 # lets grounded loop phases (e.g. Gather Context) cite real evidence; without it those phases can't
 # ground and block. So install it WITH pinchOS — the happy path works out of the box. Best-effort: if it
-# can't be installed, pinchOS still runs (ungrounded) and you can add pincher later from Connectors →
+# can't be installed, pinchOS still runs (ungrounded) and you can add pincher later from Workshop →
 # Power-ups. Opt out with PINCHOS_SKIP_PINCHER=1. Skipped on Windows (pincher ships a .zip there).
 if [ "${PINCHOS_SKIP_PINCHER:-}" != "1" ] && [ "$OS" != "win32" ]; then
   echo "pinchOS installer — also setting up pincher (the grounding engine)…"
@@ -76,10 +76,10 @@ if [ "${PINCHOS_SKIP_PINCHER:-}" != "1" ] && [ "$OS" != "win32" ]; then
       [ "$OS" = "darwin" ] && xattr -d com.apple.quarantine "$DEST/pincher" 2>/dev/null || true
       echo "  ✓ installed: $DEST/pincher ($PTAG) — grounding enabled"
     else
-      echo "  ⚠ couldn't download pincher (${PASSET}) — pinchOS still runs ungrounded; add it later from Connectors → Local tools."
+      echo "  ⚠ couldn't download pincher (${PASSET}) — pinchOS still runs ungrounded; add it later from Workshop → Power-ups."
     fi
   else
-    echo "  ⚠ couldn't resolve the latest pincher release (GitHub API rate-limited?) — pinchOS still runs ungrounded; add it later from Connectors → Local tools."
+    echo "  ⚠ couldn't resolve the latest pincher release (GitHub API rate-limited?) — pinchOS still runs ungrounded; add it later from Workshop → Power-ups."
   fi
 fi
 # PATH — write it for the user (the "mom path" doesn't end at a manual PATH edit). Both pinchos AND pincher
