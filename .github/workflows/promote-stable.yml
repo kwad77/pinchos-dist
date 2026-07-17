@@ -37,7 +37,9 @@ jobs:
       - name: Download and verify all source binaries
         shell: bash
         env:
-          GH_TOKEN: ${{ github.token }}
+          # The source repository is private. Its release assets require a
+          # cross-repository read token; publishing still uses github.token.
+          GH_TOKEN: ${{ secrets.PINCHOS_SOURCE_TOKEN }}
         run: |
           set -euo pipefail
           mkdir -p release-assets
