@@ -1,0 +1,14 @@
+Copyright (c) 2026 the pinchOS authors. All rights reserved.
+
+pinchOS is currently proprietary and unreleased ("private": true in
+package.json). No license to use, copy, modify, or distribute this software is
+granted at this time. If and when the project is published, this file will be
+replaced with the chosen license (e.g. MIT or Apache-2.0).
+
+THIRD-PARTY COMPONENTS: portions of this software are derived from third-party
+works under their own licenses — see the NOTICE file. In particular,
+src/holographic.ts is derived from the MIT-licensed Hermes holographic plugin,
+Copyright (c) 2025 Nous Research; that MIT permission notice is preserved in
+NOTICE and must remain even if this project is later relicensed.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND.
