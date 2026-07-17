@@ -1,0 +1,137 @@
+name: Promote stable release
+
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Stable source release to publish (for example v0.41.0)"
+        required: true
+        type: string
+
+permissions:
+  contents: write
+
+concurrency:
+  group: pinchos-dist-stable-promotion
+  cancel-in-progress: false
+
+env:
+  SOURCE_REPO: kwad77/pinchOS
+  DIST_REPO: kwad77/pinchos-dist
+  RELEASE_TAG: ${{ inputs.tag }}
+
+jobs:
+  promote:
+    name: Verify and promote
+    runs-on: ubuntu-latest
+    steps:
+      - name: Validate stable tag
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [[ ! "$RELEASE_TAG" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            echo "::error::${RELEASE_TAG} is not a stable vMAJOR.MINOR.PATCH tag"
+            exit 1
+          fi
+
+      - name: Download and verify all source binaries
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          mkdir -p release-assets
+
+          gh release view "$RELEASE_TAG" \
+            --repo "$SOURCE_REPO" \
+            --json tagName,isDraft,isPrerelease,assets > source-release.json
+
+          test "$(jq -r '.tagName' source-release.json)" = "$RELEASE_TAG"
+          test "$(jq -r '.isDraft' source-release.json)" = "false"
+          test "$(jq -r '.isPrerelease' source-release.json)" = "false"
+
+          expected=(
+            pinchos-linux-x64
+            pinchos-linux-arm64
+            pinchos-darwin-arm64
+            pinchos-win32-x64.exe
+          )
+
+          for asset in "${expected[@]}"; do
+            count="$(jq --arg name "$asset" '[.assets[] | select(.name == $name)] | length' source-release.json)"
+            size="$(jq --arg name "$asset" -r '.assets[] | select(.name == $name) | .size' source-release.json)"
+            if [[ "$count" != "1" || -z "$size" || "$size" -lt 50000000 ]]; then
+              echo "::error::source release has no trustworthy ${asset} asset"
+              exit 1
+            fi
+
+            gh release download "$RELEASE_TAG" \
+              --repo "$SOURCE_REPO" \
+              --pattern "$asset" \
+              --dir release-assets
+
+            actual="$(stat -c '%s' "release-assets/$asset")"
+            if [[ "$actual" != "$size" ]]; then
+              echo "::error::size mismatch for ${asset}: source=${size}, downloaded=${actual}"
+              exit 1
+            fi
+          done
+
+          (
+            cd release-assets
+            sha256sum "${expected[@]}" > SHA256SUMS
+            sha256sum --check SHA256SUMS
+          )
+
+      - name: Publish verified assets to the stable channel
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          assets=(
+            release-assets/pinchos-linux-x64
+            release-assets/pinchos-linux-arm64
+            release-assets/pinchos-darwin-arm64
+            release-assets/pinchos-win32-x64.exe
+            release-assets/SHA256SUMS
+          )
+
+          if gh release view "$RELEASE_TAG" --repo "$DIST_REPO" >/dev/null 2>&1; then
+            gh release upload "$RELEASE_TAG" \
+              --repo "$DIST_REPO" \
+              --clobber \
+              "${assets[@]}"
+            gh release edit "$RELEASE_TAG" --repo "$DIST_REPO" --latest
+          else
+            gh release create "$RELEASE_TAG" \
+              --repo "$DIST_REPO" \
+              --title "$RELEASE_TAG" \
+              --latest \
+              --notes "Stable pinchOS ${RELEASE_TAG}. Binaries were built natively in kwad77/pinchOS and promoted only after exact asset and checksum verification." \
+              "${assets[@]}"
+          fi
+
+      - name: Verify published release
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          gh release view "$RELEASE_TAG" \
+            --repo "$DIST_REPO" \
+            --json tagName,isDraft,isPrerelease,assets > dist-release.json
+
+          test "$(jq -r '.tagName' dist-release.json)" = "$RELEASE_TAG"
+          test "$(jq -r '.isDraft' dist-release.json)" = "false"
+          test "$(jq -r '.isPrerelease' dist-release.json)" = "false"
+
+          for asset in \
+            pinchos-linux-x64 \
+            pinchos-linux-arm64 \
+            pinchos-darwin-arm64 \
+            pinchos-win32-x64.exe \
+            SHA256SUMS; do
+            test "$(jq --arg name "$asset" '[.assets[] | select(.name == $name)] | length' dist-release.json)" = "1"
+          done
+

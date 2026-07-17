@@ -1,0 +1,71 @@
+name: Verify stable channel
+
+on:
+  workflow_run:
+    workflows: ["Promote stable release"]
+    types: [completed]
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Release to verify; leave empty to verify latest"
+        required: false
+        type: string
+
+permissions:
+  contents: read
+
+env:
+  DIST_REPO: kwad77/pinchos-dist
+  REQUESTED_TAG: ${{ inputs.tag }}
+
+jobs:
+  verify:
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check installer syntax and asset contract
+        shell: bash
+        run: |
+          set -euo pipefail
+          sh -n install.sh
+          grep -Fq 'ASSET="pinchos-${OS}-${ARCH}"' install.sh
+          grep -Fq '[ "$OS" = "win32" ] && ASSET="${ASSET}.exe"' install.sh
+          grep -Fq 'releases/latest/download/${ASSET}' install.sh
+
+      - name: Download and verify stable assets
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          tag="$REQUESTED_TAG"
+          if [[ -z "$tag" ]]; then
+            tag="$(gh release view --repo "$DIST_REPO" --json tagName --jq '.tagName')"
+          fi
+          if [[ ! "$tag" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            echo "::error::${tag} is not a stable release tag"
+            exit 1
+          fi
+
+          mkdir -p release-assets
+          gh release download "$tag" --repo "$DIST_REPO" --dir release-assets
+
+          expected=(
+            pinchos-linux-x64
+            pinchos-linux-arm64
+            pinchos-darwin-arm64
+            pinchos-win32-x64.exe
+          )
+          for asset in "${expected[@]}"; do
+            test -f "release-assets/$asset"
+            test "$(stat -c '%s' "release-assets/$asset")" -ge 50000000
+          done
+
+          test -f release-assets/SHA256SUMS
+          (
+            cd release-assets
+            sha256sum --check SHA256SUMS
+          )
+
