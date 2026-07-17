@@ -5,7 +5,7 @@ This repository is the stable binary channel for
 routes AI work through explicit phases and only calls an outcome verified when
 the relevant gates have actually passed.
 
-The current stable line is **v0.41.0**.
+The current stable line is **v0.42.0**.
 
 ## Install
 
@@ -82,7 +82,7 @@ xattr -d com.apple.quarantine ./pinchos-darwin-arm64
 chmod +x ./pinchos-darwin-arm64
 ```
 
-## What v0.41.0 delivers
+## What v0.42.0 delivers
 
 The browser product is organized around two surfaces:
 
@@ -106,7 +106,7 @@ This release adds:
 
 The full feature tour, architecture, model configuration, verification
 receipts, and known limitations live in the
-[source README](https://github.com/kwad77/pinchOS/blob/v0.41.0/README.md).
+[source README](https://github.com/kwad77/pinchOS/blob/v0.42.0/README.md).
 
 ## Models
 
@@ -165,13 +165,13 @@ Use the source repository for development, issues, and pull requests:
 
 - [source](https://github.com/kwad77/pinchOS)
 - [issues](https://github.com/kwad77/pinchOS/issues)
-- [v0.41.0 release](https://github.com/kwad77/pinchOS/releases/tag/v0.41.0)
+- [v0.42.0 release](https://github.com/kwad77/pinchOS/releases/tag/v0.42.0)
 
 ## License
 
 Copyright (c) 2026 the pinchOS authors. All rights reserved.
 
 The software is proprietary. The source repository's
-[LICENSE](https://github.com/kwad77/pinchOS/blob/v0.41.0/LICENSE) and
-[NOTICE](https://github.com/kwad77/pinchOS/blob/v0.41.0/NOTICE) govern use and
+[LICENSE](https://github.com/kwad77/pinchOS/blob/v0.42.0/LICENSE) and
+[NOTICE](https://github.com/kwad77/pinchOS/blob/v0.42.0/NOTICE) govern use and
 distribution.
