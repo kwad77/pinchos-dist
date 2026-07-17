@@ -134,4 +134,3 @@ jobs:
             SHA256SUMS; do
             test "$(jq --arg name "$asset" '[.assets[] | select(.name == $name)] | length' dist-release.json)" = "1"
           done
-

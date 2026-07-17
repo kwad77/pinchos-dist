@@ -68,4 +68,3 @@ jobs:
             cd release-assets
             sha256sum --check SHA256SUMS
           )
-
