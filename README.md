@@ -1,242 +1,127 @@
-<div align="center">
+# pinchOS downloads
 
-# pinchOS
+## Real AI work, with a visible plan and a result you can verify.
 
-**A local-first operating system for getting real work from AI — with the plan, the model choices, the progress, and the proof all visible before and while it runs.**
+This is the stable binary channel for [pinchOS](https://github.com/kwad77/pinchOS): a local-first operating
+system for AI work. It keeps your plan, model route, permissions, progress, artifacts, and verification receipts
+visible—and it blocks honestly when the requested outcome cannot yet be proved.
 
-Give it an outcome. It proposes a proportional plan, shows you exactly which model does each
-phase and what it costs, builds against your files, verifies the result for real, and keeps the
-receipts.
-
-[![release](https://img.shields.io/github/v/release/kwad77/pinchos-dist?label=release&color=2ea44f)](https://github.com/kwad77/pinchos-dist/releases/latest)
-[![runtime](https://img.shields.io/badge/runtime-local--first-111827)](#install)
-[![models](https://img.shields.io/badge/models-swappable-2563eb)](#models)
-[![gate](https://img.shields.io/badge/gate-blocks%20before%20it%20bluffs-d6336c)](#the-honesty-part)
-
-[Install](#install) · [See it in action](#see-it-in-action) · [Using it](#using-it) ·
-[Verify a download](#verify-a-download) · [Models](#models) · [Limitations](#known-limitations)
-
-![pinchOS Chat — a clean landing screen with a one-line status of what's connected](assets/chat-landing.png)
-
-</div>
-
----
-
-## Why this exists
-
-AI can generate an answer fast. What's hard is knowing whether it understood the request, used
-the right context, changed the actual files, connected the pieces, ran the relevant checks, and
-delivered what you asked for — instead of something that just *looks* finished.
-
-pinchOS is the missing layer around the model:
-
-- **Context** — your working folder, remembered facts and corrections, prior artifacts, and
-  connected tools, pulled in only where relevant instead of dumped into every prompt.
-- **Control** — the proposed plan, its phases, the model assigned to each one, the token budget,
-  and the target folder are shown to you before anything runs, and stay editable while it does.
-- **Execution** — a plan becomes one coherent, working artifact instead of a pile of disconnected
-  model replies.
-- **Verification** — real commands, real checks, real restarts, before the result is ever called
-  done.
-- **Continuity** — an append-only history and immutable artifact versions, so a failed attempt
-  leaves you an exact receipt instead of a blank page.
-
-The rule underneath all of it: **an end state where you didn't get what you asked for is not a
-success**, no matter how confident the write-up sounds.
-
-## See it in action
-
-Ask it something, and it answers straight — grounded in what it actually has access to, with a
-quick, skippable side-question so it learns how you like things written:
-
-![pinchOS answering a question in Chat, with a grounded capability list and a skippable side-question](assets/chat-answered.png)
-
-Ask it to build something, and before anything runs you get a **priced plan**: the phases it will
-run, the exact model assigned to each one (with per-phase token estimates), the working folder,
-and a single button to actually start it.
-
-![pinchOS's priced plan card — phases, per-phase model choice, token estimate, and target folder, all before you commit](assets/chat-priced-plan.png)
-
-That's the whole idea in two screenshots: nothing runs, and nothing costs anything, until you can
-see exactly what it's going to do.
+**Current stable release: v0.50.0**
 
 ## Install
 
-Linux and macOS:
+### Linux and macOS
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/kwad77/pinchos-dist/main/install.sh | sh
-```
-
-Open a new terminal and run:
-
-```bash
 pinchos
 ```
 
-Then open **[http://localhost:4147](http://localhost:4147)**.
+Then open [http://localhost:4147/chat](http://localhost:4147/chat) to start work, or
+[http://localhost:4147/stage](http://localhost:4147/stage) to follow the Workroom.
 
-The installer:
+### Windows and manual downloads
 
-1. detects your OS and CPU architecture;
-2. downloads the matching binary from the latest stable release;
-3. installs it to `~/.local/bin` by default and adds that to your shell path if needed; and
-4. installs [Pincher](https://github.com/kwad77/pincher), the grounding/indexing engine,
-   alongside it on Linux and macOS when a compatible release is available.
+Download the matching asset from [the latest stable release](https://github.com/kwad77/pinchos-dist/releases/latest):
 
-Set `PINCHOS_BIN_DIR` to install somewhere else. Set `PINCHOS_SKIP_PINCHER=1` to skip the
-grounding engine.
+| Platform | Asset |
+| --- | --- |
+| Linux x64 | `pinchos-linux-x64` |
+| Linux ARM64 | `pinchos-linux-arm64` |
+| macOS Apple Silicon | `pinchos-darwin-arm64` |
+| Windows x64 | `pinchos-win32-x64.exe` |
 
-Windows and unsupported architectures: grab the matching asset from the
-[latest release](https://github.com/kwad77/pinchos-dist/releases/latest) manually.
+The binaries include Node and do not require a separate Node installation. macOS Intel and Windows ARM64 can run
+from source for now.
 
-## Using it
+## What you get in v0.50.0
 
-pinchOS starts a local runtime with two front doors:
+- **A real Workroom:** turn an outcome into a visible, bounded run with a plan, model route, budget, working folder,
+  approvals, artifacts, and proof.
+- **Verification that means something:** commands, APIs, process health, restart behavior, browser journeys, served
+  assets, and artifact identity can all be part of a delivered outcome.
+- **Safe revisions:** accepted artifacts remain immutable while you inspect a candidate, compare versions, and choose
+  whether to accept, retry, or discard it.
+- **Model freedom:** use local OpenAI-compatible runtimes, subscription CLIs such as Codex or Claude, or configured
+  APIs. Your context and verification contracts remain provider-independent.
+- **Honest model inventory:** discovered, configured, reachable, measured, and eligible are distinct states. Missing
+  credentials, provider loss, and unsupported hardware remain visible as missing capacity—not fake quality scores.
+- **Bounded local onboarding:** no silent model download; benchmarks require a local-only preview confirmation and can
+  be cancelled.
+- **Governed learned routing:** deterministic routing is the default. Verified-only learned routing is explicit opt-in,
+  respects every privacy/permission/budget constraint, explains its choice, and rolls back immediately.
+- **Durable continuity:** exact-profile Work history, artifacts, branches, portable context, memory, SSE/API/SDK,
+  IDE, TUI, and browser projections tell the same story.
 
-- **`/chat`** — the front door. Ask a question, attach a spec, point it at an existing project, or
-  describe something to build. Small asks answer directly; anything that needs real work gets the
-  priced plan shown above.
-- **`/stage`** — the Workroom. Everything Chat kicked off lives here while it runs: current phase,
-  elapsed time and remaining budget, live explanations of what it's doing and why, the working
-  folder, concurrent jobs, stop controls, and settings for models, loops, and connectors.
+## The important boundary
 
-A delivered artifact opens in a sandboxed preview with its verification receipt attached. You can
-revise it in place — select a region, say what should change, review the proposed diff, and
-accept, adjust, retry, or discard — without pinchOS throwing away the version you already accepted
-and starting over.
+pinchOS never treats a model claim as proof. It will not:
 
-### Terminal client
+- call unverified work successful;
+- silently switch a user-selected model and pretend it did not;
+- use a remote provider for local-only Work;
+- call discovered hardware or a signed-out provider “ready”; or
+- bury a missing credential, outage, or failed critical check.
 
-If you'd rather stay in the terminal, leave the runtime running in one terminal and open a second:
-
-```bash
-pinchos chat
-```
-
-It's a full terminal chat client against the same runtime — streaming replies, live phase
-progress, clarification prompts, and plan selection, all without a browser.
-
-### What it can actually do
-
-| | |
-|---|---|
-| **Conversation** | Grounded answers, file/image/doc attachments, streaming replies, remembered facts and corrections |
-| **Builds** | New apps, edits to an existing project, build-from-spec, explicit folder targeting |
-| **Work orchestration** | Built-in and custom multi-phase loops, per-phase model routing, stop/resume, multiple concurrent jobs |
-| **Models** | Local OpenAI-compatible endpoints, installed Claude/Codex subscriptions, explicit per-phase choice |
-| **Verification** | Real commands, tests, APIs, process health checks, browser checks — not a model's opinion of its own work |
-| **Revisions** | Region selection, discussion, reviewed change contracts, immutable versions, before/after comparison |
-| **Memory** | Profile-scoped facts and corrections that carry across conversations, with provenance |
-
-### Configuration
-
-Most of it lives in Workroom settings. Useful environment overrides:
-
-```bash
-PINCHOS_PORT=4147
-PINCHOS_DATA_DIR=/path/to/private/runtime-data
-PINCHOS_MODEL_URL=http://localhost:11434/v1
-PINCHOS_MODEL_NAME=your-model
-PINCHOS_MODEL_COMMAND="your command-backed model"
-```
-
-## Models
-
-pinchOS is the context and verification layer, not a model vendor. It can use:
-
-- a local OpenAI-compatible endpoint (Ollama, LM Studio, vLLM, or any other `/v1` server);
-- an installed Claude or Codex subscription CLI; or
-- an explicitly configured command-backed agent.
-
-It probes what's actually available on your machine and offers real, working choices — it doesn't
-show a provider as connected when it isn't, or quietly swap out a model you explicitly picked.
-
-**No model is bundled.** The binary can't ship a multi-gigabyte local model or a subscription for
-you. Without one configured, pinchOS still starts, still answers from an honest offline fallback,
-and tells you exactly what to connect.
-
-## The honesty part
-
-This is the part pinchOS is actually built around:
-
-- a result isn't called `VERIFIED` because of the name of the phase that ran it — it's verified
-  because something executed and passed;
-- a build isn't presented as landed until the files actually exist at the folder you were shown;
-- a missing dependency or credential stays honestly blocked, not silently skipped;
-- self-improvement can propose a reviewed change to itself, but it can't relax its own check to
-  get there.
-
-## Known limitations
-
-Real boundaries, not fine print:
-
-- **Ambitious builds are still slow.** Real multi-phase verification takes real time — this trades
-  speed for a much higher chance the result actually works.
-- **A model is external.** See [Models](#models) above — nothing is bundled.
-- **External services can block honestly.** A missing credential, a rate limit, or an unreachable
-  source can stop a live workflow rather than fake its way past it.
-- **Very large or unusual repositories are still a risk.** Broad grounding helps, but not every
-  toolchain and repo shape has been proven out yet.
+When it cannot prove the result, it gives you the block and the next action.
 
 ## Verify a download
 
-Every stable release publishes `SHA256SUMS` alongside the four platform binaries, generated only
-after this repository's promotion workflow has re-downloaded and byte-verified each asset from the
-signed source build.
-
-Linux:
+Each stable release includes `SHA256SUMS`, generated after all four binaries are downloaded and checked.
 
 ```bash
+# Linux
 sha256sum --check SHA256SUMS
-```
 
-macOS:
-
-```bash
+# macOS
 shasum -a 256 pinchos-darwin-arm64
-# compare against the matching line in SHA256SUMS
 ```
 
-The macOS binary is ad-hoc signed, not Apple-notarized. The installer removes the quarantine
-attribute from the exact file it downloads; a manual install needs to do that itself:
+Compare the printed digest with the matching line in `SHA256SUMS`.
+
+macOS binaries are ad-hoc signed, not Apple-notarized. The installer removes quarantine from the exact downloaded
+file. For a manual download:
 
 ```bash
 xattr -d com.apple.quarantine ./pinchos-darwin-arm64
 chmod +x ./pinchos-darwin-arm64
 ```
 
-### How a release gets here
-
-The build and the publish are deliberately separate decisions:
-
-1. `kwad77/pinchOS` (private source) tags a release and builds all four platform binaries natively,
-   one per OS.
-2. This repository's promotion workflow downloads those exact source assets, checks their sizes
-   against what the source release advertises, and only then generates `SHA256SUMS`.
-3. Only a fully-verified set gets published here and pointed at by `releases/latest`.
-4. A follow-up workflow independently re-checks the published release: the right assets, the right
-   checksums, nothing missing.
-
 ## Stable and beta channels
 
-The installer above uses this repository's `latest` stable release. To try the newest source
-prerelease instead:
+The installer uses this repository’s latest stable release. To request the newest source prerelease:
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/kwad77/pinchos-dist/main/install.sh | sh -s -- --beta
 ```
 
-Prereleases are never promoted to the stable channel here.
+Prereleases never replace the stable channel automatically.
 
-## Source and issues
+## Release integrity
 
-pinchOS's source repository is private during this stage of development — the binaries here are
-the supported way to run it. Found a problem with a download, the installer, or something you're
-seeing in the app? Open an issue [in this repository](https://github.com/kwad77/pinchos-dist/issues).
+1. `kwad77/pinchOS` tags a version-matched, verified source commit.
+2. Its Release binaries workflow builds each platform on a native GitHub runner.
+3. All four source assets must succeed before publication.
+4. This repository downloads the exact source assets, verifies their names and sizes, generates `SHA256SUMS`, and
+   verifies checksums before promotion.
+5. Only then is this stable channel updated.
+
+## From source and documentation
+
+```bash
+git clone https://github.com/kwad77/pinchOS.git
+cd pinchOS
+npm run setup
+npm run pinchos
+```
+
+- [Source repository](https://github.com/kwad77/pinchOS)
+- [v0.50.0 source release](https://github.com/kwad77/pinchOS/releases/tag/v0.50.0)
+- [Source README and product guide](https://github.com/kwad77/pinchOS/blob/v0.50.0/README.md)
+- [Latest binary release](https://github.com/kwad77/pinchos-dist/releases/latest)
 
 ## License
 
-Copyright (c) 2026 the pinchOS authors. All rights reserved. The software is proprietary — see
-[LICENSE](LICENSE) and [NOTICE](NOTICE) in this repository for the exact terms and third-party
-attributions.
+Copyright (c) 2026 the pinchOS authors. All rights reserved. The source repository’s
+[LICENSE](https://github.com/kwad77/pinchOS/blob/v0.50.0/LICENSE) and
+[NOTICE](https://github.com/kwad77/pinchOS/blob/v0.50.0/NOTICE) govern use and distribution.
