@@ -6,7 +6,7 @@ This is the stable binary channel for [pinchOS](https://github.com/kwad77/pinchO
 system for AI work. It keeps your plan, model route, permissions, progress, artifacts, and verification receipts
 visible—and it blocks honestly when the requested outcome cannot yet be proved.
 
-**Current stable release: v0.50.0**
+**Current stable release: v0.50.1**
 
 ## Install
 
@@ -34,7 +34,7 @@ Download the matching asset from [the latest stable release](https://github.com/
 The binaries include Node and do not require a separate Node installation. macOS Intel and Windows ARM64 can run
 from source for now.
 
-## What you get in v0.50.0
+## What you get in v0.50.1
 
 - **A real Workroom:** turn an outcome into a visible, bounded run with a plan, model route, budget, working folder,
   approvals, artifacts, and proof.
@@ -52,6 +52,12 @@ from source for now.
   respects every privacy/permission/budget constraint, explains its choice, and rolls back immediately.
 - **Durable continuity:** exact-profile Work history, artifacts, branches, portable context, memory, SSE/API/SDK,
   IDE, TUI, and browser projections tell the same story.
+- **Managed-build onboarding:** fresh installer-created build folders recover cleanly without requiring a manual
+  Pincher indexing step before the first run.
+- **Faster local long phases:** long local reasoning phases default to answer-first behavior, avoiding hidden-token
+  stalls while preserving the explicit opt-in reasoning path.
+- **Safer generated files:** in-target absolute paths are normalized to the selected build folder, and bounded
+  filtered receipt checks are verified mechanically.
 
 ## The important boundary
 
@@ -116,12 +122,12 @@ npm run pinchos
 ```
 
 - [Source repository](https://github.com/kwad77/pinchOS)
-- [v0.50.0 source release](https://github.com/kwad77/pinchOS/releases/tag/v0.50.0)
-- [Source README and product guide](https://github.com/kwad77/pinchOS/blob/v0.50.0/README.md)
+- [v0.50.1 source release](https://github.com/kwad77/pinchOS/releases/tag/v0.50.1)
+- [Source README and product guide](https://github.com/kwad77/pinchOS/blob/v0.50.1/README.md)
 - [Latest binary release](https://github.com/kwad77/pinchos-dist/releases/latest)
 
 ## License
 
 Copyright (c) 2026 the pinchOS authors. All rights reserved. The source repository’s
-[LICENSE](https://github.com/kwad77/pinchOS/blob/v0.50.0/LICENSE) and
-[NOTICE](https://github.com/kwad77/pinchOS/blob/v0.50.0/NOTICE) govern use and distribution.
+[LICENSE](https://github.com/kwad77/pinchOS/blob/v0.50.1/LICENSE) and
+[NOTICE](https://github.com/kwad77/pinchOS/blob/v0.50.1/NOTICE) govern use and distribution.
