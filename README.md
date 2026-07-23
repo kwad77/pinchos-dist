@@ -6,7 +6,7 @@ This is the stable binary channel for [pinchOS](https://github.com/kwad77/pinchO
 system for AI work. It keeps your plan, model route, permissions, progress, artifacts, and verification receipts
 visible—and it blocks honestly when the requested outcome cannot yet be proved.
 
-**Current stable release: v0.50.1**
+**Current stable release: v0.50.2**
 
 ## Install
 
@@ -34,7 +34,7 @@ Download the matching asset from [the latest stable release](https://github.com/
 The binaries include Node and do not require a separate Node installation. macOS Intel and Windows ARM64 can run
 from source for now.
 
-## What you get in v0.50.1
+## What you get in v0.50.2
 
 - **A real Workroom:** turn an outcome into a visible, bounded run with a plan, model route, budget, working folder,
   approvals, artifacts, and proof.
@@ -58,6 +58,8 @@ from source for now.
   stalls while preserving the explicit opt-in reasoning path.
 - **Safer generated files:** in-target absolute paths are normalized to the selected build folder, and bounded
   filtered receipt checks are verified mechanically.
+- **Settings that finish the job:** see the installed version, check the stable release channel, upgrade with a
+  verified staged install, or archive all runtime data and return to a fresh instance.
 
 ## The important boundary
 
@@ -122,12 +124,12 @@ npm run pinchos
 ```
 
 - [Source repository](https://github.com/kwad77/pinchOS)
-- [v0.50.1 source release](https://github.com/kwad77/pinchOS/releases/tag/v0.50.1)
-- [Source README and product guide](https://github.com/kwad77/pinchOS/blob/v0.50.1/README.md)
+- [v0.50.2 source release](https://github.com/kwad77/pinchOS/releases/tag/v0.50.2)
+- [Source README and product guide](https://github.com/kwad77/pinchOS/blob/v0.50.2/README.md)
 - [Latest binary release](https://github.com/kwad77/pinchos-dist/releases/latest)
 
 ## License
 
 Copyright (c) 2026 the pinchOS authors. All rights reserved. The source repository’s
-[LICENSE](https://github.com/kwad77/pinchOS/blob/v0.50.1/LICENSE) and
-[NOTICE](https://github.com/kwad77/pinchOS/blob/v0.50.1/NOTICE) govern use and distribution.
+[LICENSE](https://github.com/kwad77/pinchOS/blob/v0.50.2/LICENSE) and
+[NOTICE](https://github.com/kwad77/pinchOS/blob/v0.50.2/NOTICE) govern use and distribution.
