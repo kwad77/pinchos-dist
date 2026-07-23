@@ -6,7 +6,7 @@ This is the stable binary channel for **pinchOS**: a local-first operating syste
 plan, model route, permissions, progress, artifacts, and verification receipts visible—and it blocks honestly
 when the requested outcome cannot yet be proved.
 
-**Current stable release: v0.50.4**
+**Current stable release: v0.50.5**
 
 ![The priced plan card: a build ask becomes visible phases, a per-phase model route you can swap, the working folder, and an honest token estimate — before anything runs.](assets/chat-priced-plan-v0503.png)
 
@@ -39,7 +39,7 @@ Download the matching asset from [the latest stable release](https://github.com/
 The binaries include Node and do not require a separate Node installation. macOS Intel and Windows ARM64 can run
 from source for now.
 
-## What you get in v0.50.4
+## What you get in v0.50.5
 
 - **A real Workroom:** turn an outcome into a visible, bounded run with a plan, model route, budget, working folder,
   approvals, artifacts, and proof.
@@ -73,8 +73,8 @@ from source for now.
 - **Commands that finish:** slash commands complete from any conversation, and typing `/` autocompletes
   against the server catalog (Tab completes).
 - **Updates that come to you:** on start, chat checks the release channel once and offers an available
-  update right in the conversation — staged download, verified install, explicit restart. "Later" snoozes
-  that version.
+  update right in the conversation. One click carries the whole journey — download, verified install,
+  automatic restart onto the new version. "Later" snoozes that version.
 
 ![A plain question answered by a local model, with the route receipt visible under the answer.](assets/chat-answered-v0503.png)
 
