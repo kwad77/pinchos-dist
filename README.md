@@ -2,11 +2,16 @@
 
 ## Real AI work, with a visible plan and a result you can verify.
 
-This is the stable binary channel for [pinchOS](https://github.com/kwad77/pinchOS): a local-first operating
-system for AI work. It keeps your plan, model route, permissions, progress, artifacts, and verification receipts
-visible—and it blocks honestly when the requested outcome cannot yet be proved.
+This is the stable binary channel for **pinchOS**: a local-first operating system for AI work. It keeps your
+plan, model route, permissions, progress, artifacts, and verification receipts visible—and it blocks honestly
+when the requested outcome cannot yet be proved.
 
 **Current stable release: v0.50.2**
+
+![The priced plan card: a build ask becomes visible phases, a per-phase model route you can swap, the working folder, and an honest token estimate — before anything runs.](assets/chat-priced-plan.png)
+
+*A build ask becomes a priced plan before anything runs: the phases, a per-phase model route you can swap, the
+working folder, and the cloud-token estimate — here, 7/7 steps free on the local machine.*
 
 ## Install
 
@@ -61,6 +66,16 @@ from source for now.
 - **Settings that finish the job:** see the installed version, check the stable release channel, upgrade with a
   verified staged install, or archive all runtime data and return to a fresh instance.
 
+![A plain question answered by a local model, with the route receipt visible under the answer.](assets/chat-answered.png)
+
+*A plain question stays a plain answer. The receipt under it names the model that actually answered and expands
+into how the turn was routed.*
+
+![Settings: the installed version on the latest release, the update check, and the guarded wipe-all-data flow.](assets/settings-updates.png)
+
+*New in v0.50.2: the installed version and release-channel status live in Settings, next to the guarded reset —
+typed confirmation required, every profile's data archived before the instance returns to a fresh install.*
+
 ## The important boundary
 
 pinchOS never treats a model claim as proof. It will not:
@@ -72,6 +87,11 @@ pinchOS never treats a model claim as proof. It will not:
 - bury a missing credential, outage, or failed critical check.
 
 When it cannot prove the result, it gives you the block and the next action.
+
+![The Stage: the live loop scene with the verification circuit and the ask in transit.](assets/stage-loop.png)
+
+*The Stage's loop scene: the ask travels a verification circuit that returns to where it started. Nothing lands
+without passing the gates on the way back.*
 
 ## Verify a download
 
@@ -97,7 +117,7 @@ chmod +x ./pinchos-darwin-arm64
 
 ## Stable and beta channels
 
-The installer uses this repository’s latest stable release. To request the newest source prerelease:
+The installer uses this repository’s latest stable release. To request the newest prerelease:
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/kwad77/pinchos-dist/main/install.sh | sh -s -- --beta
@@ -107,29 +127,23 @@ Prereleases never replace the stable channel automatically.
 
 ## Release integrity
 
-1. `kwad77/pinchOS` tags a version-matched, verified source commit.
+1. The pinchOS source repository tags a version-matched, verified source commit.
 2. Its Release binaries workflow builds each platform on a native GitHub runner.
 3. All four source assets must succeed before publication.
 4. This repository downloads the exact source assets, verifies their names and sizes, generates `SHA256SUMS`, and
    verifies checksums before promotion.
 5. Only then is this stable channel updated.
 
-## From source and documentation
+## Documentation
 
-```bash
-git clone https://github.com/kwad77/pinchOS.git
-cd pinchOS
-npm run setup
-npm run pinchos
-```
+pinchOS is developed in a private source repository; the binaries here are promoted from its tagged, verified
+releases. The product documents itself in place: every surface shows the receipts behind its claims, the Stage
+explains each phase as it runs, and Settings covers models, routing, updates, and reset.
 
-- [Source repository](https://github.com/kwad77/pinchOS)
-- [v0.50.2 source release](https://github.com/kwad77/pinchOS/releases/tag/v0.50.2)
-- [Source README and product guide](https://github.com/kwad77/pinchOS/blob/v0.50.2/README.md)
 - [Latest binary release](https://github.com/kwad77/pinchos-dist/releases/latest)
+- [All releases](https://github.com/kwad77/pinchos-dist/releases)
 
 ## License
 
-Copyright (c) 2026 the pinchOS authors. All rights reserved. The source repository’s
-[LICENSE](https://github.com/kwad77/pinchOS/blob/v0.50.2/LICENSE) and
-[NOTICE](https://github.com/kwad77/pinchOS/blob/v0.50.2/NOTICE) govern use and distribution.
+Copyright (c) 2026 the pinchOS authors. All rights reserved. See [LICENSE](LICENSE) and [NOTICE](NOTICE) in this
+repository for the terms that govern use and distribution.
