@@ -8,7 +8,7 @@ when the requested outcome cannot yet be proved.
 
 **Current stable release: v0.50.3**
 
-![The priced plan card: a build ask becomes visible phases, a per-phase model route you can swap, the working folder, and an honest token estimate — before anything runs.](assets/chat-priced-plan.png)
+![The priced plan card: a build ask becomes visible phases, a per-phase model route you can swap, the working folder, and an honest token estimate — before anything runs.](assets/chat-priced-plan-v0503.png)
 
 *A build ask becomes a priced plan before anything runs: the phases, a per-phase model route you can swap, the
 working folder, and the cloud-token estimate — here, 7/7 steps free on the local machine.*
@@ -69,12 +69,12 @@ from source for now.
   folder picker right in place, and a persistent folder chip beside the composer shows the working folder at all
   times.
 
-![A plain question answered by a local model, with the route receipt visible under the answer.](assets/chat-answered.png)
+![A plain question answered by a local model, with the route receipt visible under the answer.](assets/chat-answered-v0503.png)
 
 *A plain question stays a plain answer. The receipt under it names the model that actually answered and expands
 into how the turn was routed.*
 
-![Settings: the installed version on the latest release, the update check, and the guarded wipe-all-data flow.](assets/settings-updates.png)
+![Settings: the installed version on the latest release, the update check, and the guarded wipe-all-data flow.](assets/settings-updates-v0503.png)
 
 *New in v0.50.2: the installed version and release-channel status live in Settings, next to the guarded reset —
 typed confirmation required, every profile's data archived before the instance returns to a fresh install.*
@@ -91,7 +91,7 @@ pinchOS never treats a model claim as proof. It will not:
 
 When it cannot prove the result, it gives you the block and the next action.
 
-![The Stage: the live loop scene with the verification circuit and the ask in transit.](assets/stage-loop.png)
+![The Stage: the live loop scene with the verification circuit and the ask in transit.](assets/stage-loop-v0503.png)
 
 *The Stage's loop scene: the ask travels a verification circuit that returns to where it started. Nothing lands
 without passing the gates on the way back.*
