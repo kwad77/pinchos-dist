@@ -6,7 +6,7 @@ This is the stable binary channel for **pinchOS**: a local-first operating syste
 plan, model route, permissions, progress, artifacts, and verification receipts visible—and it blocks honestly
 when the requested outcome cannot yet be proved.
 
-**Current stable release: v0.54.0**
+**Current stable release: v0.55.0**
 
 ![The priced plan card: a build ask becomes visible phases, a per-phase model route you can swap, the working folder, and an honest token estimate — before anything runs.](assets/chat-priced-plan-v0503.png)
 
@@ -39,7 +39,7 @@ Download the matching asset from [the latest stable release](https://github.com/
 The binaries include Node and do not require a separate Node installation. macOS Intel and Windows ARM64 can run
 from source for now.
 
-## What you get in v0.54.0
+## What you get in v0.55.0
 
 - **A real Workroom:** turn an outcome into a visible, bounded run with a plan, model route, budget, working folder,
   approvals, artifacts, and proof.
@@ -72,6 +72,9 @@ from source for now.
   contents — ask "what's in this repo?" and get the real files, not a shrug.
 - **Commands that finish:** slash commands complete from any conversation, and typing `/` autocompletes
   against the server catalog (Tab completes).
+- **Agents that work in parallel:** when a big ask breaks into independent pieces, those pieces build
+  at the same time and merge into one verified result — and if two pieces would touch the same file,
+  the conflict is named and nothing is overwritten.
 - **No ask too big:** an ambitious ask (a service, a dashboard, a multi-part system) is broken into a
   tree of smaller workstreams, each with its own proof, that build and verify on the real engine —
   and if one piece can't be done, that piece is named while the verified rest stands, instead of the
