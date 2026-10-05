@@ -1,15 +1,13 @@
 name: Verify stable channel
 
 on:
-  workflow_run:
-    workflows: ["Promote stable release"]
-    types: [completed]
   workflow_dispatch:
     inputs:
       tag:
         description: "Release to verify; leave empty to verify latest"
         required: false
         type: string
+
 
 permissions:
   contents: read
